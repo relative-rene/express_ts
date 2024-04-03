@@ -2,7 +2,7 @@
   "homepage": "https://relative-rene.github.io/react-sampler",
   "name": "express_ts",
   "version": "1.0.0",
-  "description": "",
+  "description": "express server written in typescript",
   "main": "src/index.ts",
   "scripts": {
     "start": "nodemon",
