@@ -33,7 +33,6 @@ if(process.env.NODE_ENV === "production"){
 }
 
 app.use(express.static(path.join(__dirname, 'build')));
-app.use(harp.mount(path.join(__dirname + "/public")));
 
 app.use('/', router());
 
