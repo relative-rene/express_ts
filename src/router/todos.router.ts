@@ -1,4 +1,4 @@
-import { readAllProfileTodos, createTodo, updateTodo, deleteTodo } from './../controllers/todos.controller';
+import { readAllProfileTodos, createTodo, updateTodo, deleteTodo } from '../controllers/todos.controller';
 import express from 'express';
 
 

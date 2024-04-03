@@ -2,7 +2,7 @@ import express from 'express';
 import {
     postExercise,
     getAllExercises
-} from './../models/gains.model';
+} from '../models/gains.model';
 
 export const readAllExercises = async (req: express.Request, res: express.Response) => {
     try {

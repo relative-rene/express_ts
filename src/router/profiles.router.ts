@@ -7,7 +7,7 @@ import {
     addProfileStats,
     readAProfileStat,
     readAllProfileStats
-} from './../controllers/profiles.controller';
+} from '../controllers/profiles.controller';
 import express from 'express';
 
 export default (router: express.Router) => {

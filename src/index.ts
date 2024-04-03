@@ -9,6 +9,7 @@ import 'dotenv/config'
 import mongoose from 'mongoose';
 import path from 'path';
 
+
 const app = express();
 
 app.use(cors({credentials:true}));
@@ -32,6 +33,7 @@ if(process.env.NODE_ENV === "production"){
 }
 
 app.use(express.static(path.join(__dirname, 'build')));
+app.use(harp.mount(path.join(__dirname + "/public")));
 
 app.use('/', router());
 
@@ -40,5 +42,7 @@ app.get('/*', function (req, res) {
 });
 
 server.listen(4000, ()=>{
-    console.log('Typescript Server running on http://localhost:4000/')
+  process.env.NODE_ENV === "production"? 
+  console.log("https://relative-rene.github.io/react-sampler"):
+  console.log('Typescript Server running on http://localhost:4000/');
 })
