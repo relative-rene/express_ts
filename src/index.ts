@@ -5,10 +5,11 @@ import cookieParser from 'cookie-parser';
 import compression from 'compression';
 import cors from 'cors';
 import router from './router';
-import 'dotenv/config'
+import dotenv from 'dotenv';
 import mongoose from 'mongoose';
 import path from 'path';
 
+dotenv.config({ path: `.env.${process.env.NODE_ENV}` })
 
 const app = express();
 
@@ -26,11 +27,9 @@ const server = http.createServer(app);
  get your MONGO_URL from mongodb atlas websiste. find similar example in mern-exercise app
  */
 
-if(process.env.NODE_ENV === "production"){
     mongoose.Promise = Promise;
-    mongoose.connect( process.env.MONGO_ATLAS_NGSAMPLER_URI);
-    mongoose.connection.on('error',(error:Error)=> console.log(error));
-}
+    mongoose.connect( process.env.DATABASE_URI, {useNewUrlParser: true,useUnifiedTopology: true  } );
+    mongoose.connection.on('error',(error:Error)=> console.error(error));
 
 app.use(express.static(path.join(__dirname, 'build')));
 
@@ -41,7 +40,5 @@ app.get('/*', function (req, res) {
 });
 
 server.listen(4000, ()=>{
-  process.env.NODE_ENV === "production"? 
-  console.log("https://relative-rene.github.io/react-sampler"):
-  console.log('Typescript Server running on http://localhost:4000/');
+  console.log('SERVER_URI', process.env.SERVER_URI);
 })

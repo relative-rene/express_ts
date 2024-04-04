@@ -1,6 +1,5 @@
 import { createConnection, Schema } from 'mongoose';
-const databaseUri = process.env.NODE_ENV === "production" ? process.env.MONGO_ATLAS_NGSAMPLER_URI : process.env.NOVEL_BIN_URI;
-const novelBinCon = createConnection(databaseUri, { useNewUrlParser: true, useUnifiedTopology: true });
+const novelBinCon = createConnection(process.env.DATABASE_URI, { useNewUrlParser: true, useUnifiedTopology: true });
 
 
 const novelSchema = new Schema({

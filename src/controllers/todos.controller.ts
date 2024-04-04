@@ -52,9 +52,7 @@ export const updateTodo = async (req: express.Request, res: express.Response) =>
         const { todo_id, profile_id } = req.params;
         const { description, due_date_and_time, is_done, creation_date } = req.body[0];
 
-        console.log(req.params, req.body);
         if (profile_id !== req.body[0].profile_id || todo_id !== req.body[0]._id) {
-            console.log(description, due_date_and_time, is_done, creation_date)
             return res.sendStatus(400)
         }
         const updatedTodo = Object.assign({}, {

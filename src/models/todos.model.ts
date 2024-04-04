@@ -1,8 +1,7 @@
 import { createConnection, Schema } from 'mongoose';
 import 'dotenv/config'
 
-const databaseUri = process.env.NODE_ENV === "production" ? process.env.MONGO_ATLAS_NGSAMPLER_URI : process.env.SAMPLER_URI;
-const samplerConn = createConnection(databaseUri, { useNewUrlParser: true, useUnifiedTopology: true });
+const samplerConn = createConnection(process.env.DATABASE_URI, { useNewUrlParser: true, useUnifiedTopology: true });
 
 
 

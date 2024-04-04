@@ -26,7 +26,7 @@ export const readAllProfiles = async (req: express.Request, res: express.Respons
 
         return res.status(200).json(profiles);
     } catch (error) {
-        console.log(error);
+        console.error(error);
         return res.sendStatus(400)
     }
 }
@@ -77,7 +77,6 @@ export const addProfileStats = async (req: express.Request, res: express.Respons
     try {
         const { profile_id } = req.params;
         const {  chest, abs, thigh, tricep, suprailiac, weight, height, age } = req.body
-        console.log('chest', chest, 'abs', abs, 'thigh',thigh,'tricep',tricep,'suprailiac' ,suprailiac, 'weight', weight, 'height', height, 'age', age);
         if (((chest && abs && thigh) || (tricep && suprailiac && thigh) )&& weight) {
             const newStats = {
                 profile_id,
@@ -104,9 +103,7 @@ export const addProfileStats = async (req: express.Request, res: express.Respons
 export const readAllProfileStats = async (req: express.Request, res: express.Response) => {
     try {
         const { profile_id } = req.params;
-        console.log('profile_id', typeof profile_id)
         const data = await getAllProfileStats(profile_id);
-        console.log('data', data)
         return res.status(200).json(data)
     } catch (error) {
         console.error(error);
@@ -175,26 +172,7 @@ export const removeAProfileSet = async (req: express.Request, res: express.Respo
 
         return res.status(200).json(setLog)
     } catch (error) {
-        console.log(error);
+        console.error(error);
         return res.sendStatus(400)
     }
 }
-
-// export const updateUser = async (req: express.Request, res: express.Response) => {
-//     try {
-//         const { id } = req.params;
-//         const { username } = req.body;
-
-//         if (!username) {
-//             return res.sendStatus(400)
-//         }
-//         const user = await getUserById(id);
-
-//         user.username = username;
-//         await user.save();
-//         return res.status(200).json(user).end();
-//     } catch (error) {
-//         console.log(error);
-//         return res.sendStatus(400);
-//     }
-// }

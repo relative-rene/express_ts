@@ -1,12 +1,12 @@
 import { postProfile, getProfileByEmail } from '../models/gains.model';
 import { authentication, random } from '../helper/index';
 import express from 'express';
-import 'dotenv/config'
+import dotenv from 'dotenv';
+dotenv.config({ path: `.env.${process.env.NODE_ENV}` });
 
 export const login = async (req: express.Request, res: express.Response) => {
     try {
         const { email, password } = req.body;
-        console.log(email, password)
         if (!email || !password) {
             return res.sendStatus(400)
         }
@@ -22,8 +22,6 @@ export const login = async (req: express.Request, res: express.Response) => {
         user.authentication.sessionToken = authentication(salt, user._id.toString())
         await user.save();
 
-        console.log(user.authentication.sessionToken);
-
        res.cookie('[RENE-AUTH]', user.authentication.sessionToken, {
         // httpOnly: true, The cookie is not accessible via JavaScript
         secure: process.env.NODE_ENV === 'production', // Use secure in production
@@ -32,7 +30,7 @@ export const login = async (req: express.Request, res: express.Response) => {
       });
         return res.status(200).json(user);
     } catch (error) {
-        console.log(error);
+        console.error(error);
         return res.sendStatus(400);
     }
 }
@@ -62,7 +60,7 @@ export const register = async (req: express.Request, res: express.Response) => {
         return res.status(200).json(user);
     }
     catch (error) {
-        console.log(error);
+        console.error(error);
         return res.sendStatus(400)
     }
 }

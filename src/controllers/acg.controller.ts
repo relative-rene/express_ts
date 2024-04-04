@@ -85,9 +85,7 @@ export const createNovel = async (req: express.Request, res: express.Response) =
 export const getAllChapters = async (req: express.Request, res: express.Response) => {
     try {
         const { novel_id } = req.params;
-        console.log('novel_id!!!', novel_id)
         const chapters = await getAllChaptersByNovelId(novel_id);
-        console.log('chapters!!!', chapters)
         if (!chapters) {
             return res.sendStatus(404)
         }
@@ -129,10 +127,8 @@ export const getTableOfContent = async (req: express.Request, res: express.Respo
 
     try {
         const { novel_id } = req.params
-        console.log('getTableOfContent', novel_id)
         if (!novel_id) return res.sendStatus(406);
         const tableOfContents = await gettingTableOfContents(novel_id);
-        console.log('tableOfContents', tableOfContents)
         return res.status(200).json(tableOfContents);
     } catch (error) {
         console.error(error);
