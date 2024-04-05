@@ -1,6 +1,7 @@
 import { createConnection, Schema } from 'mongoose';
-import 'dotenv/config'
+import dotenv from 'dotenv';
 
+dotenv.config({ path: `.env.${process.env.NODE_ENV}` });
 const samplerConn = createConnection(process.env.DATABASE_URI, { useNewUrlParser: true, useUnifiedTopology: true });
 
 
