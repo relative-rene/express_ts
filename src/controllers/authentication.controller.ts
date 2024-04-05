@@ -2,9 +2,9 @@ import { postProfile, getProfileByEmail } from '../models/gains.model';
 import { authentication, random } from '../helper/index';
 import express from 'express';
 import dotenv from 'dotenv';
-if(process.env.NODE_ENV !== 'production'){
-    dotenv.config({ path: `.env.${process.env.NODE_ENV}` })
-  }
+
+process.env.NODE_ENV === 'production' &&
+dotenv.config({ path: __dirname + `.env.${process.env.NODE_ENV}` });
   
 export const login = async (req: express.Request, res: express.Response) => {
     try {

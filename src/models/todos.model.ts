@@ -2,8 +2,9 @@ import { createConnection, Schema } from 'mongoose';
 import dotenv from 'dotenv';
 
 if(process.env.NODE_ENV !== 'production'){
-    dotenv.config({ path: `.env.${process.env.NODE_ENV}` })
+    dotenv.config({ path: `.env.${process.env.NODE_ENV}` });
   }
+  console.log('todos.model', process.env.DATABASE_URI);
   const samplerConn = createConnection(process.env.DATABASE_URI, { useNewUrlParser: true, useUnifiedTopology: true });
 
 

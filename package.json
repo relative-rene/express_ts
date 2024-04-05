@@ -1,5 +1,4 @@
 {
-  "homepage": "https://relative-rene.github.io/work-report/",
   "name": "express_ts",
   "version": "1.0.0",
   "description": "express server written in typescript",

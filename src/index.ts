@@ -9,9 +9,10 @@ import dotenv from 'dotenv';
 import mongoose from 'mongoose';
 import path from 'path';
 
-if(process.env.NODE_ENV !== 'production'){
-  dotenv.config({ path: `.env.${process.env.NODE_ENV}` })
-}
+process.env.NODE_ENV === 'production' &&
+dotenv.config({ path: __dirname + `.env.${process.env.NODE_ENV}` });
+
+console.log('path', process.env.path)
 
 const app = express();
 
@@ -30,6 +31,7 @@ const server = http.createServer(app);
  */
 
 mongoose.Promise = Promise;
+console.log('process.env.DATABASE_URI', process.env.DATABASE_URI)
 mongoose.connect(process.env.DATABASE_URI, { useNewUrlParser: true, useUnifiedTopology: true });
 mongoose.connection.on('error', (error: Error) => console.error(error));
 
@@ -41,13 +43,8 @@ app.get('/*', function (req, res) {
   res.sendFile(path.join(__dirname, 'build', 'index.html'));
 });
 
+process.env.NODE_ENV === 'production' ?
+  server.listen(() => console.log('SERVER_URI', process.env.SERVER_URI)) :
+  server.listen(4000, () => console.log('SERVER_URI', process.env.SERVER_URI));
 
-if (process.env.NODE_ENV === 'production') {
-  server.listen(() => {
-    console.log('SERVER_URI', process.env.SERVER_URI);
-  })
-} else {
-  server.listen(4000, () => {
-    console.log('SERVER_URI', process.env.SERVER_URI);
-  });
-}
+console.log('SERVER_URI', process.env.SERVER_URI);
