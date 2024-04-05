@@ -9,11 +9,13 @@ import dotenv from 'dotenv';
 import mongoose from 'mongoose';
 import path from 'path';
 
-dotenv.config({ path: `.env.${process.env.NODE_ENV}` })
+if(process.env.NODE_ENV !== 'production'){
+  dotenv.config({ path: `.env.${process.env.NODE_ENV}` })
+}
 
 const app = express();
 
-app.use(cors({credentials:true}));
+app.use(cors({ credentials: true }));
 app.use(compression());
 app.use(cookieParser());
 app.use(bodyParser.json());
@@ -27,9 +29,9 @@ const server = http.createServer(app);
  get your MONGO_URL from mongodb atlas websiste. find similar example in mern-exercise app
  */
 
-    mongoose.Promise = Promise;
-    mongoose.connect( process.env.DATABASE_URI, {useNewUrlParser: true,useUnifiedTopology: true  } );
-    mongoose.connection.on('error',(error:Error)=> console.error(error));
+mongoose.Promise = Promise;
+mongoose.connect(process.env.DATABASE_URI, { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connection.on('error', (error: Error) => console.error(error));
 
 app.use(express.static(path.join(__dirname, 'build')));
 
@@ -39,6 +41,13 @@ app.get('/*', function (req, res) {
   res.sendFile(path.join(__dirname, 'build', 'index.html'));
 });
 
-server.listen(4000, ()=>{
-  console.log('SERVER_URI', process.env.SERVER_URI);
-})
+
+if (process.env.NODE_ENV === 'production') {
+  server.listen(() => {
+    console.log('SERVER_URI', process.env.SERVER_URI);
+  })
+} else {
+  server.listen(4000, () => {
+    console.log('SERVER_URI', process.env.SERVER_URI);
+  });
+}
