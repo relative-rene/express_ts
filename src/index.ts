@@ -12,14 +12,12 @@ import path from 'path';
 process.env.NODE_ENV === 'production' &&
 dotenv.config({ path: __dirname + `.env.${process.env.NODE_ENV}` });
 
-console.log('path', process.env.path)
-
 const app = express();
-
 app.use(cors({ credentials: true }));
 app.use(compression());
 app.use(cookieParser());
 app.use(bodyParser.json());
+app.set('trust proxy', true);
 bodyParser.urlencoded({ extended: true });
 const server = http.createServer(app);
 
@@ -31,7 +29,6 @@ const server = http.createServer(app);
  */
 
 mongoose.Promise = Promise;
-console.log('process.env.DATABASE_URI', process.env.DATABASE_URI)
 mongoose.connect(process.env.DATABASE_URI, { useNewUrlParser: true, useUnifiedTopology: true });
 mongoose.connection.on('error', (error: Error) => console.error(error));
 
@@ -46,5 +43,3 @@ app.get('/*', function (req, res) {
 process.env.NODE_ENV === 'production' ?
   server.listen(() => console.log('SERVER_URI', process.env.SERVER_URI)) :
   server.listen(4000, () => console.log('SERVER_URI', process.env.SERVER_URI));
-
-console.log('SERVER_URI', process.env.SERVER_URI);
