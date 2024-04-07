@@ -2,16 +2,15 @@ import { createConnection, Schema } from 'mongoose';
 import dotenv from 'dotenv';
 import 'dotenv/config';
 
-
-process.env.NODE_ENV == 'production' &&
-dotenv.config({ path: `.env.${process.env.NODE_ENV}` });
+process.env.NODE_ENV === 'production' &&
+    dotenv.config({ path: `.env.${process.env.NODE_ENV}` });
 
 console.log('path', process.env.path)
 console.log('NODE_ENV', process.env.NODE_ENV)
 console.log('DATABASE_URI', process.env.DATABASE_URI);
 console.log('SERVER_URI', process.env.SERVER_URI);
 
-  const samplerConn = createConnection(process.env.DATABASE_URI, { useNewUrlParser: true, useUnifiedTopology: true });
+const samplerConn = createConnection(process.env.DATABASE_URI, { useNewUrlParser: true, useUnifiedTopology: true });
 
 const profileSchema = new Schema({
     first_name: String,

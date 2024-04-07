@@ -32,12 +32,12 @@ mongoose.Promise = Promise;
 mongoose.connect(process.env.DATABASE_URI, { useNewUrlParser: true, useUnifiedTopology: true });
 mongoose.connection.on('error', (error: Error) => console.error(error));
 
-app.use(express.static(path.join(__dirname, 'build')));
+app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', router());
 
 app.get('/*', function (req, res) {
-  res.sendFile(path.join(__dirname, 'build', 'index.html'));
+  res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
 process.env.NODE_ENV === 'production' ?

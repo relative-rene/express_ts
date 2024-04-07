@@ -1,4 +1,6 @@
 import dotenv from 'dotenv';
+import 'dotenv/config';
+
 import { createConnection, Schema } from 'mongoose';
 
 process.env.NODE_ENV === 'production' &&
