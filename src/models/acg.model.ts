@@ -1,11 +1,11 @@
 import dotenv from 'dotenv';
-import 'dotenv/config';
 
 import { createConnection, Schema } from 'mongoose';
 
-process.env.NODE_ENV === 'production' &&
-dotenv.config({ path: `.env.${process.env.NODE_ENV}` });
-
+process.env.NODE_ENV === 'production'?
+  dotenv.config({ path:`.env.${process.env.NODE_ENV}`}):
+  dotenv.config();
+  
 const novelBinCon = createConnection(process.env.DATABASE_URI, { useNewUrlParser: true, useUnifiedTopology: true });
 
 
