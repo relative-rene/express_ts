@@ -6,8 +6,8 @@ import compression from 'compression';
 import cors from 'cors';
 import router from './router';
 import dotenv from 'dotenv';
-import mongoose from 'mongoose';
 import path from 'path';
+import { connectDB } from '../src/config/connectDB';
 
 process.env.NODE_ENV === 'production'?
   dotenv.config({ path:`.env.${process.env.NODE_ENV}`}):
@@ -32,10 +32,10 @@ const server = http.createServer(app);
  get your MONGO_URL from mongodb atlas websiste. find similar example in mern-exercise app
  */
 
-mongoose.Promise = Promise;
-mongoose.connect(process.env.DATABASE_URI, { useNewUrlParser: true, useUnifiedTopology: true });
-mongoose.connection.on('error', (error: Error) => console.error(error));
-
+// mongoose.Promise = Promise;
+// mongoose.connect(process.env.DATABASE_URI, { useNewUrlParser: true, useUnifiedTopology: true });
+// mongoose.connection.on('error', (error: Error) => console.error(error));
+connectDB()
 app.use(express.static(path.join(__dirname,'public')));
 
 app.use('/', router());
