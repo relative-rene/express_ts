@@ -7,7 +7,7 @@ process.env.NODE_ENV === 'production'?
   dotenv.config();
 
 
-const samplerConn = createConnection(process.env.DATABASE_URI, { useNewUrlParser: true, useUnifiedTopology: true });
+export const samplerConnection = createConnection(process.env.DATABASE_URI, { useNewUrlParser: true, useUnifiedTopology: true });
 
 const profileSchema = new Schema({
     first_name: String,
@@ -58,10 +58,10 @@ const setLogSchema = new Schema({
 }, { collection: 'setLogs' });
 
 
-export const ProfileModel = samplerConn.model('Profile', profileSchema);
-export const ProfileStatsModel = samplerConn.model('ProfileStats', profileStatsSchema);
-export const ExerciseModel = samplerConn.model('Exercise', exerciseSchema);
-export const SetLogModel = samplerConn.model('SetLog', setLogSchema);
+export const ProfileModel = samplerConnection.model('Profile', profileSchema);
+export const ProfileStatsModel = samplerConnection.model('ProfileStats', profileStatsSchema);
+export const ExerciseModel = samplerConnection.model('Exercise', exerciseSchema);
+export const SetLogModel = samplerConnection.model('SetLog', setLogSchema);
 
 // profiles
 export const postProfile = (values: Record<string, any>) => ProfileModel.create(values);
