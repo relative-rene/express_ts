@@ -13,9 +13,6 @@ process.env.NODE_ENV === 'production'?
   dotenv.config({ path:`.env.${process.env.NODE_ENV}`}):
   dotenv.config();
   
-console.log('DATABASE_URI', process.env.DATABASE_URI);
-console.log('SERVER_URI', process.env.SERVER_URI);
-
 const app = express();
 app.use(cors({ credentials: true }));
 app.use(compression());
