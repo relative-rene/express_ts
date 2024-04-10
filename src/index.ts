@@ -35,11 +35,31 @@ const server = http.createServer(app);
 // mongoose.Promise = Promise;
 // mongoose.connect(process.env.DATABASE_URI, { useNewUrlParser: true, useUnifiedTopology: true });
 // mongoose.connection.on('error', (error: Error) => console.error(error));
-connectDB()
+// connectDB()
+const { MongoClient, ServerApiVersion } = require('mongodb');
+// Create a MongoClient with a MongoClientOptions object to set the Stable API version
+const client = new MongoClient(process.env.DATABASE_URI, {
+  serverApi: {
+    version: ServerApiVersion.v1,
+    strict: true,
+    deprecationErrors: true,
+  }
+});
+async function run() {
+  try {
+    // Connect the client to the server	(optional starting in v4.7)
+    await client.connect();
+    // Send a ping to confirm a successful connection
+    await client.db("admin").command({ ping: 1 });
+    console.log("Pinged your deployment. You successfully connected to MongoDB!");
+  } finally {
+    // Ensures that the client will close when you finish/error
+    await client.close();
+  }
+}
+run().catch(console.dir);
 app.use(express.static(path.join(__dirname,'public')));
 
 app.use('/', router());
 
-process.env.NODE_ENV == 'production' ?
-  server.listen(() => console.log('SERVER_URI', process.env.SERVER_URI)) :
-  server.listen(4000, () => console.log('SERVER_URI', process.env.SERVER_URI));
+server.listen(process.env.PORT, () => console.log('SERVER_URI', process.env.SERVER_URI));
