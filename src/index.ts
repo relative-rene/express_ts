@@ -37,7 +37,7 @@ app.use(express.static(path.join(__dirname,'public')));
 app.use('/', router());
 
 app.get('*', (req, res)=>{
-  res.sendFile(path.join(__dirname, 'public', 'index.html'));
+  res.sendFile(path.join('public', 'index.html'));
 })
 
 server.listen(process.env.PORT, () => console.log('SERVER_URI', process.env.SERVER_URI));
