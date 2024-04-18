@@ -1,4 +1,4 @@
-import { createConnection, Schema } from 'mongoose';
+import { Schema } from 'mongoose';
 import dotenv from 'dotenv';
 import { samplerConnection } from '../models/gains.model';
 

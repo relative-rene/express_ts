@@ -6,26 +6,28 @@ export const login = async (req: express.Request, res: express.Response) => {
     try {
         const { email, password } = req.body;
         if (!email || !password) {
-            return res.sendStatus(400)
+            return res.status(400).send({ status: 400, message: `missing email ${email} or password ${password}` });
         }
         const user = await getProfileByEmail(email).select('+authentication.salt +authentication.password');
         if (!user) {
-            return res.sendStatus(400);
+            return res.status(400).send({ status: 400, message: 'user not found' })
         }
         const expectedHash = authentication(user.authentication.salt, password);
+        console.log('expectedHash', expectedHash, user);
+
         if (user.authentication.password !== expectedHash) {
-            return res.sendStatus(403)
+            return res.status(403).send({ status: 403, message: 'Incorrect login credentials' })
         }
         const salt = random();
         user.authentication.sessionToken = authentication(salt, user._id.toString())
         await user.save();
 
-       res.cookie('[RENE-AUTH]', user.authentication.sessionToken, {
-        // httpOnly: true, The cookie is not accessible via JavaScript
-        secure: process.env.NODE_ENV === 'production', // Use secure in production
-        sameSite: 'strict', // The cookie is sent only to requests originating from the same site
-        expires: new Date(Date.now() + 36000000) // The cookie will expire in 1 hour
-      });
+        res.cookie('[RENE-AUTH]', user.authentication.sessionToken, {
+            // httpOnly: true, The cookie is not accessible via JavaScript
+            secure: process.env.NODE_ENV === 'production', // Use secure in production
+            sameSite: 'strict', // The cookie is sent only to requests originating from the same site
+            expires: new Date(Date.now() + 36000000) // The cookie will expire in 1 hour
+        });
         return res.status(200).json(user);
     } catch (error) {
         console.error(error);
