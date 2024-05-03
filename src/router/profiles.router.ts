@@ -24,9 +24,10 @@ export default (router: express.Router) => {
 
     // setLogs
     router.post('/api/profiles/:profile_id/set/create', addProfileSet);
-    // router.get('/api/profiles/:profile_id/set/read', addProfileSet);
     router.get('/api/profiles/:profile_id/all_sets/read', readAllProfileSets);
+    
     router.put('/api/profiles/:profile_id/set/patch', addProfileSet);
     router.delete('/api/profiles/:profile_id/set/delete', removeAProfileSet);
-
+    // router.get('/api/profiles/:profile_id/set/read', addProfileSet);
+    
 }

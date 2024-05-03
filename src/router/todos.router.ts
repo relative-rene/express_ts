@@ -1,5 +1,5 @@
-import { readAllProfileTodos, createTodo, updateTodo, deleteTodo } from '../controllers/todos.controller';
 import express from 'express';
+import { readAllProfileTodos, createTodo, updateTodo, deleteTodo } from '../controllers/todos.controller';
 
 
 

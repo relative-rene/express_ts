@@ -13,7 +13,6 @@ export const login = async (req: express.Request, res: express.Response) => {
             return res.status(400).send({ status: 400, message: 'user not found' })
         }
         const expectedHash = authentication(user.authentication.salt, password);
-        console.log('expectedHash', expectedHash, user);
 
         if (user.authentication.password !== expectedHash) {
             return res.status(403).send({ status: 403, message: 'Incorrect login credentials' })
