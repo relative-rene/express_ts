@@ -20,13 +20,14 @@ export const login = async (req: express.Request, res: express.Response) => {
         const salt = random();
         user.authentication.sessionToken = authentication(salt, user._id.toString())
         await user.save();
-
+        
         res.cookie('[RENE-AUTH]', user.authentication.sessionToken, {
             // httpOnly: true, The cookie is not accessible via JavaScript
             secure: process.env.NODE_ENV === 'production', // Use secure in production
             sameSite: 'strict', // The cookie is sent only to requests originating from the same site
             expires: new Date(Date.now() + 36000000) // The cookie will expire in 1 hour
         });
+        console.log('I got to the end', user)
         return res.status(200).json(user);
     } catch (error) {
         console.error(error);
@@ -60,6 +61,6 @@ export const register = async (req: express.Request, res: express.Response) => {
     }
     catch (error) {
         console.error(error);
-        return res.sendStatus(400)
+        return res.sendStatus(400).json({message:error})
     }
 }

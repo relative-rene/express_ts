@@ -23,17 +23,22 @@ const profileSchema = new Schema({
 }, { collection: 'profiles' });
 
 const profileStatsSchema = new Schema({
-    profile_id: String,
-    body_fat_percent: String,
-    chest: String,
-    abs: String,
-    thigh: String,
-    tricep: String,
-    suprailiac: String,
-    lean_body_mass: String,
+    date:Date,
+    age: String,
     weight: String,
+    body_fat: String,
     height: String,
-    age: String
+    neck: String,
+    chest: String,
+    belly: String,
+    butt: String,
+    left_arm: String,
+    right_arm: String,
+    left_forearm: String,
+    right_forearm: String,
+    left_leg:String,
+    right_leg: String,
+    profile_id: String,
 },
     { collection: 'profileStats' });
 
@@ -84,7 +89,7 @@ export const patchAnExerciseById = (id: string, values: Record<string, any>) => 
 export const deleteExerciseById = (id: string) => ExerciseModel.findOneAndRemove({ _id: id });
 
 // setLogs 
-export const postSetLog = (values: Record<string, any>) => SetLogModel.create(values);
+export const postProfileSet = (values: Record<string, any>) => SetLogModel.create(values);
 export const getAllProfileSets = (profile_id: string) => SetLogModel.find({ profile_id });
 // export const getProfileLogsById = (logId: string) => SetLogModel.findById({ _id: logId })
 export const patchAProfileSet = (id: string, values: Record<string, any>) => SetLogModel.findOneAndUpdate({ _id: id, values });
@@ -92,7 +97,9 @@ export const deleteAProfileSet = (id: string) => SetLogModel.findOneAndRemove({ 
 
 // profileStats
 export const postProfileStats = (values: Record<string, any>) => ProfileStatsModel.create(values);
-export const getAllProfileStats = (profile_id: string) => ProfileStatsModel.find({ "profile_id": 1234 });
+
+export const getAllProfileStats = (profile_id: string) => ProfileStatsModel.find({ profile_id:profile_id });
+
 export const getAProfileStatById = (profile_id: string, _id: string) => ProfileStatsModel.find({ profile_id, _id });
 export const patchAProfileStatById = (profile_id: string, values: Record<string, any>) => ProfileStatsModel.findOneAndUpdate({ profile_id }, values);
 export const deleteAProfileStatById = (id: string) => ProfileStatsModel.findOneAndRemove({ _id: id });

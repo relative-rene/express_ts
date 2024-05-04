@@ -10,7 +10,7 @@ import {
     patchAProfileStatById,
     deleteAProfileStatById,
 
-    postSetLog,
+    postProfileSet,
     getAllProfileSets,
     deleteAProfileSet,
     patchAProfileSet,
@@ -76,19 +76,16 @@ export const readAllProfileEmail = async (req: express.Request, res: express.Res
 export const addProfileStats = async (req: express.Request, res: express.Response) => {
     try {
         const { profile_id } = req.params;
-        const {  chest, abs, thigh, tricep, suprailiac, weight, height, age } = req.body
-        if (((chest && abs && thigh) || (tricep && suprailiac && thigh) )&& weight) {
-            const newStats = {
+        const { date, age, weight } = req.body;
+        if (date && age && weight) {
+            const newStats = Object.assign({},{
+                ...req.body,
                 profile_id,
-                weight,
-                height,
+                date,
                 age,
-                chest,
-                abs,
-                thigh,
-                tricep,
-                suprailiac
-            };
+                weight
+            });
+            console.log('newStats', newStats)
             await postProfileStats(newStats);
             return res.status(200).json(newStats);
         } else {
@@ -103,6 +100,7 @@ export const addProfileStats = async (req: express.Request, res: express.Respons
 export const readAllProfileStats = async (req: express.Request, res: express.Response) => {
     try {
         const { profile_id } = req.params;
+        console.log('readAllProfileStats profile_id', profile_id)
         const data = await getAllProfileStats(profile_id);
         return res.status(200).json(data)
     } catch (error) {
@@ -131,7 +129,7 @@ export const addProfileSet = async (req: express.Request, res: express.Response)
         const { profile_id } = req.params;
         if ((selectedExercise && set_weight && profile_id) && (total_reps || left_reps && right_reps)) {
             const [exercise_name, exercise_id] = selectedExercise.split(":")
-            const newPR = await postSetLog(Object.assign({}, {
+            const newPR = await postProfileSet(Object.assign({}, {
                 exercise_id,
                 profile_id,
                 exercise_name,
