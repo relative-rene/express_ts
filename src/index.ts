@@ -33,11 +33,11 @@ mongoose.Promise = Promise;
 mongoose.connect(process.env.DATABASE_URI, { useNewUrlParser: true, useUnifiedTopology: true });
 mongoose.connection.on('error', (error: Error) => console.error(error));
 
-app.use(express.static(path.join(__dirname,'public')));
+app.use(express.static(path.join(__dirname,'public', 'index.html')));
 app.use('/', router());
 
 app.get('*', (req, res)=>{
-  res.sendFile(path.resolve(__dirname,'public', 'index.html'));
+  res.sendFile(path.resolve('public', 'index.html'));
 })
 
 server.listen(process.env.PORT, () => console.log('SERVER_URI', process.env.SERVER_URI));
