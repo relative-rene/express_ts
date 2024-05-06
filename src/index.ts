@@ -36,7 +36,7 @@ mongoose.connection.on('error', (error: Error) => console.error(error));
 app.use(express.static(path.join(__dirname,'public')));
 app.use('/', router());
 
-app.get('*', (req, res)=>{
+app.get('/*', (req, res)=>{
   res.sendFile(path.join('public', 'index.html'));
 })
 
