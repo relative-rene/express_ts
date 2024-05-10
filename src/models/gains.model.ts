@@ -2,9 +2,9 @@ import { createConnection, Schema } from 'mongoose';
 import dotenv from 'dotenv';
 
 
-process.env.NODE_ENV === 'production'?
-  dotenv.config({ path:`.env.${process.env.NODE_ENV}`}):
-  dotenv.config();
+process.env.NODE_ENV === 'production' ?
+    dotenv.config({ path: `.env.${process.env.NODE_ENV}` }) :
+    dotenv.config();
 
 
 export const samplerConnection = createConnection(process.env.DATABASE_URI, { useNewUrlParser: true, useUnifiedTopology: true });
@@ -13,6 +13,7 @@ const profileSchema = new Schema({
     first_name: String,
     last_name: String,
     date_of_birth: String,
+    isAdmin: Boolean,
     email: { type: String, required: true },
 
     authentication: {
@@ -23,7 +24,7 @@ const profileSchema = new Schema({
 }, { collection: 'profiles' });
 
 const profileStatsSchema = new Schema({
-    date:Date,
+    date: Date,
     age: String,
     weight: String,
     body_fat: String,
@@ -36,7 +37,7 @@ const profileStatsSchema = new Schema({
     right_arm: String,
     left_forearm: String,
     right_forearm: String,
-    left_leg:String,
+    left_leg: String,
     right_leg: String,
     profile_id: String,
 },
@@ -52,13 +53,13 @@ const exerciseSchema = new Schema({
 });
 
 const setLogSchema = new Schema({
+    date_and_time: Date,
     exercise_id: String,
     profile_id: String,
     total_reps: Number,
     left_reps: Number,
     right_reps: Number,
     set_weight: Number,
-    date_and_time: Date,
     exercise_name: String,
 }, { collection: 'setLogs' });
 
@@ -92,14 +93,13 @@ export const deleteExerciseById = (id: string) => ExerciseModel.findOneAndRemove
 export const postProfileSet = (values: Record<string, any>) => SetLogModel.create(values);
 export const getAllProfileSets = (profile_id: string) => SetLogModel.find({ profile_id });
 // export const getProfileLogsById = (logId: string) => SetLogModel.findById({ _id: logId })
-export const patchAProfileSet = (id: string, values: Record<string, any>) => SetLogModel.findOneAndUpdate({ _id: id, values });
+export const patchAProfileSet = (profile_id: string, set_id: string, values: Record<string, any>) => SetLogModel.findOneAndUpdate({ profile_id, _id: set_id }, values);
 export const deleteAProfileSet = (id: string) => SetLogModel.findOneAndRemove({ _id: id });
 
 // profileStats
 export const postProfileStats = (values: Record<string, any>) => ProfileStatsModel.create(values);
-
-export const getAllProfileStats = (profile_id: string) => ProfileStatsModel.find({ profile_id:profile_id });
+export const getAllProfileStats = (profile_id: string) => ProfileStatsModel.find({ profile_id: profile_id });
+export const patchAProfileStatById = (profile_id: string, stat_id: string, values: Record<string, any>) => ProfileStatsModel.findOneAndUpdate({ profile_id, _id: stat_id }, values);
 
 export const getAProfileStatById = (profile_id: string, _id: string) => ProfileStatsModel.find({ profile_id, _id });
-export const patchAProfileStatById = (profile_id: string, values: Record<string, any>) => ProfileStatsModel.findOneAndUpdate({ profile_id }, values);
 export const deleteAProfileStatById = (id: string) => ProfileStatsModel.findOneAndRemove({ _id: id });

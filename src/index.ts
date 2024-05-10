@@ -23,7 +23,7 @@ bodyParser.urlencoded({ extended: true });
 const server = http.createServer(app);
 
 
-/**
+/** 
  * 
  When connecting db to Atlas
  get your MONGO_URL from mongodb atlas websiste. find similar example in mern-exercise app
