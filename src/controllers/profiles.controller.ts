@@ -22,7 +22,7 @@ export const readAllProfiles = async (req: express.Request, res: express.Respons
         return res.status(200).json(profiles);
     } catch (error) {
         console.error(error);
-        return res.sendStatus(400)
+        return res.status(400).send({ status: 400, message: `${error}` })
     }
 }
 
@@ -46,11 +46,11 @@ export const addProfileStats = async (req: express.Request, res: express.Respons
             workReportCache.del(url)
             return res.status(200).json(newStats);
         } else {
-            return res.status(422).send('Data Incomplete')
+            return res.status(422).send({ status: 422, message: `Data Incomplete date:${date} age:${age} weight:${weight}` })
         }
     } catch (error) {
         console.error(error);
-        return res.status(400).send('OOps')
+        return res.status(400).send({ status: 400, message: 'OOps' })
     }
 }
 
@@ -65,7 +65,7 @@ export const readAllProfileStats = async (req: express.Request, res: express.Res
         return res.status(200).json(stats)
     } catch (error) {
         console.error(error);
-        return res.status(400).send('Oops')
+        return res.status(400).send({ status: 400, message: `${error}` });
     }
 }
 
@@ -76,7 +76,7 @@ export const readAProfileStat = async (req: express.Request, res: express.Respon
         return res.status(200).json(stats)
     } catch (error) {
         console.error(error);
-        return res.status(400).send('Oops')
+        return res.status(400).send({ status: 400, message: `${error}` })
     }
 }
 
@@ -85,7 +85,7 @@ export const updateAProfileStat = async (req: express.Request, res: express.Resp
         const { profile_id, stat_id } = req.params;
         const { date, age, weight, body_fat, height, neck, chest, belly, butt, left_arm, right_arm,
             left_forearm, right_forearm, left_leg, right_leg } = req.body;
-        if (!date || !weight || !body_fat) return res.status(422).send('Missing required inputs');
+        if (!date || !weight || !body_fat) return res.status(422).send({ status: 422, message: `Missing required inputs date:${date} weight:${weight} body fat:${body_fat}` });
         const newStat = Object.assign({}, {
             date: date || null,
             age: age || null,
@@ -110,7 +110,7 @@ export const updateAProfileStat = async (req: express.Request, res: express.Resp
         return res.status(200).json(stats)
     } catch (error) {
         console.error(error);
-        return res.status(400).send('Oops')
+        return res.status(400).send({ status: 400, message: `${error}` });
     }
 }
 
@@ -140,7 +140,7 @@ export const addProfileSet = async (req: express.Request, res: express.Response)
             return res.status(200).json(newPR);
         } else {
             const missingInput = 'profile_id: ' + profile_id + ' selectedExercise: ' + selectedExercise + ' set_weight: ' + set_weight + ' total_reps: ' + total_reps + ' date_and_time ' + date_and_time;
-            res.status(422).send(missingInput)
+            res.status(422).send({ status: 422, message: missingInput })
         }
     } catch (error) {
         console.error(error);
@@ -158,7 +158,7 @@ export const readAllProfileSets = async (req: express.Request, res: express.Resp
         return res.status(200).json(sets)
     } catch (error) {
         console.error(error);
-        return res.status(400).send('Oops')
+        return res.status(400).send({ status: 400, message: `${error}` });
     }
 }
 
@@ -179,7 +179,7 @@ export const updateAProfileSet = async (req: express.Request, res: express.Respo
     try {
         const { profile_id, set_id } = req.params;
         const { date_and_time, exercise_id, total_reps, left_reps, right_reps, set_weight, exercise_name } = req.body;
-        if (!date_and_time || !exercise_name) return res.status(422).send('Missing required inputs');
+        if (!date_and_time || !exercise_name) return res.status(422).send({ status: 422, message: `Missing required inputs date and time:${date_and_time} exercise_name:${exercise_name}` });
         const newSet = Object.assign({}, {
             date_and_time: date_and_time || null,
             exercise_id: exercise_id || null,
@@ -196,6 +196,6 @@ export const updateAProfileSet = async (req: express.Request, res: express.Respo
         return res.status(200).json(sets)
     } catch (error) {
         console.error(error);
-        return res.status(400).send('Oops')
+        return res.status(400).send({ status: 400, message: `Oops ${error}` });
     }
 }
