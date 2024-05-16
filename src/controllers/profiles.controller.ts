@@ -135,7 +135,8 @@ export const addProfileSet = async (req: express.Request, res: express.Response)
             ));
 
             let url = workReportCache.data && Object.keys(workReportCache.data).find(key => key.includes('read_sets'));
-            url && workReportCache.del(url)
+            console.log('url', url)
+            url && workReportCache.del(url);
             return res.status(200).json(newPR);
         } else {
             res.status(422).send({ status: 422, message: 'Missing Inputs. Please fill in form' })
