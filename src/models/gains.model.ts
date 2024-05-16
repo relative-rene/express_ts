@@ -39,7 +39,7 @@ const profileStatsSchema = new Schema({
     right_forearm: Number,
     left_leg: Number,
     right_leg: Number,
-    profile_id: Number,
+    profile_id: String,
 },
     { collection: 'profileStats' });
 
