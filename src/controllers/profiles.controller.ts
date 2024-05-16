@@ -120,7 +120,8 @@ export const addProfileSet = async (req: express.Request, res: express.Response)
     try {
         const { selectedExercise, set_weight, total_reps, date_and_time, left_reps, right_reps } = req.body;
         const { profile_id } = req.params;
-        const hasRequiredInputs = date_and_time && selectedExercise && set_weight && profile_id;
+        const weight = set_weight || 0;
+        const hasRequiredInputs = date_and_time && selectedExercise && profile_id;
         const hasRequiredReps = total_reps || left_reps && right_reps;
         if (hasRequiredInputs && hasRequiredReps) {
             const [exercise_name, exercise_id] = selectedExercise.split(":")
@@ -131,7 +132,7 @@ export const addProfileSet = async (req: express.Request, res: express.Response)
                 total_reps: total_reps ? +total_reps : 0,
                 left_reps: left_reps ? +left_reps : 0,
                 right_reps: right_reps ? +right_reps : 0,
-                set_weight: set_weight ? +set_weight : 0,
+                set_weight: weight,
                 exercise_name,
             }
             ));
