@@ -16,7 +16,7 @@ export const readAllExercises = async (req: express.Request, res: express.Respon
         return res.status(200).json(sortedExercises);
     } catch (error) {
         console.error(error);
-        return res.status(400).send({status:400, message:error});
+        return res.status(400).send({ status: 400, message: error });
     }
 }
 
@@ -27,7 +27,7 @@ export const createExercise = async (req: express.Request, res: express.Response
         return res.status(200).json(exercise);
     } catch (error) {
         console.error(error);
-        return res.status(400).send({status:400, message:`${error}`});
+        return res.status(400).send({ status: 400, message: 'Request Failed Please try again' });
     }
 }
 
@@ -39,7 +39,7 @@ export const updateExercise = async (req: express.Request, res: express.Response
         console.log('exercise_id', exercise_id, name, primary_muscle, balance, muscle_group)
 
         if (exercise_id !== req.body._id) {
-            return res.status(400).send({status:400, message:'Exercise Id not found'});
+            return res.status(400).send({ status: 400, message: 'Exercise Id not found' });
         }
         const updatedExercise = Object.assign({}, {
             name,
