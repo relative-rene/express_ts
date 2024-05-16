@@ -38,9 +38,7 @@ export const addProfileStats = async (req: express.Request, res: express.Respons
                 ...req.body,
                 profile_id
             });
-            console.log('newStats', newStats);
             await postProfileStats(newStats);
-            console.log(workReportCache.data)
             let url = workReportCache.data && Object.keys(workReportCache.data).find(key => key.includes('read_stats'));
             url && workReportCache.del(url)
             return res.status(200).json(newStats);
@@ -60,7 +58,6 @@ export const readAllProfileStats = async (req: express.Request, res: express.Res
 
         const stats = await getAllProfileStats(profile_id);
         workReportCache.set(key, stats, 2592000);
-        console.log('key', key)
         return res.status(200).json(stats)
     } catch (error) {
         console.log(error)

@@ -36,7 +36,6 @@ export const updateExercise = async (req: express.Request, res: express.Response
         const { exercise_id } = req.params;
         const { name, primary_muscle, balance, muscle_group } = req.body;
 
-        console.log('exercise_id', exercise_id, name, primary_muscle, balance, muscle_group)
 
         if (exercise_id !== req.body._id) {
             return res.status(400).send({ status: 400, message: 'Exercise Id not found' });
