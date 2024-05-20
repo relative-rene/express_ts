@@ -22,6 +22,8 @@ export const readAllExercises = async (req: express.Request, res: express.Respon
 
 export const createExercise = async (req: express.Request, res: express.Response) => {
     try {
+        const { name, primary_muscle, balance, muscle_group} =req.body
+        if(!(name && primary_muscle && balance && muscle_group)) return res.status(422).send({status:422, message:'Missing required input. Please fill in form.'})
         const exercise = await postExercise(req.body);
         workReportCache.del('/api/gains/exercises');
         return res.status(200).json(exercise);
@@ -36,10 +38,8 @@ export const updateExercise = async (req: express.Request, res: express.Response
         const { exercise_id } = req.params;
         const { name, primary_muscle, balance, muscle_group } = req.body;
 
-
-        if (exercise_id !== req.body._id) {
-            return res.status(400).send({ status: 400, message: 'Exercise Id not found' });
-        }
+        if (exercise_id !== req.body._id) return res.status(400).send({ message: 'Exercise Id not found' });
+        if(!(name && primary_muscle && balance && muscle_group)) return res.status(422).send({message: 'Missing required inputs'});
         const updatedExercise = Object.assign({}, {
             name,
             primary_muscle,
@@ -50,7 +50,7 @@ export const updateExercise = async (req: express.Request, res: express.Response
         const payload = await patchAnExerciseById(exercise_id, updatedExercise);
         return res.status(200).json(payload);
     } catch (error) {
-        console.error('catch', error);
+        console.error(error);
         return res.sendStatus(400);
     }
 }
