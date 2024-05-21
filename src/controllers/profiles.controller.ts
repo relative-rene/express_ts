@@ -177,7 +177,8 @@ export const removeAProfileSet = async (req: express.Request, res: express.Respo
 export const updateAProfileSet = async (req: express.Request, res: express.Response) => {
     try {
         const { profile_id, set_id } = req.params;
-        const { date_and_time, exercise_id, total_reps, left_reps, right_reps, set_weight, exercise_name } = req.body;
+        const { date_and_time, total_reps, left_reps, right_reps, set_weight, selectedExercise } = req.body;
+        const [exercise_name, exercise_id] = selectedExercise.split(":")
         if (!date_and_time || !exercise_name) return res.status(422).send({ status: 422, message: `Missing required inputs. Please fill in form` });
         const newSet = Object.assign({}, {
             date_and_time: date_and_time || null,
