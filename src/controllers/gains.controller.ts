@@ -48,6 +48,7 @@ export const updateExercise = async (req: express.Request, res: express.Response
         });
 
         const payload = await patchAnExerciseById(exercise_id, updatedExercise);
+        workReportCache.del('/api/gains/exercises');
         return res.status(200).json(payload);
     } catch (error) {
         console.error(error);
