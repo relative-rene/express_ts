@@ -1,6 +1,4 @@
 import express from 'express';
-// import nodemailer from 'nodemailer';
-
 import { get, merge } from 'lodash';
 import { getProfileBySessionToken } from '../models/gains.model';
 import NodeCache from 'node-cache';
@@ -44,7 +42,7 @@ export const isOwner = async (req: express.Request, res: express.Response, next:
 }
 
 
-// export const confirmationEmailFlow = () => {
+// export const confirmationEmail = () => {
 //     let transporter =
 //         nodemailer.createTransport({
 //             host: 'smtp.example.com',
@@ -83,3 +81,5 @@ export function cacheMiddleware(req: express.Request, res: express.Response, nex
         next();
     }
 }
+
+
