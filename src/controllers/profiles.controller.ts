@@ -1,4 +1,4 @@
-import { workReportCache } from './../middlewares/index';
+// import { workReportCache } from './../middlewares/index';
 import express from 'express';
 
 import {
@@ -40,8 +40,8 @@ export const addProfileStats = async (req: express.Request, res: express.Respons
                 profile_id
             });
             await postProfileStats(newStats);
-            let url = workReportCache.data && Object.keys(workReportCache.data).find(key => key.includes('read_stats'));
-            url && workReportCache.del(url)
+            // let url = workReportCache.data && Object.keys(workReportCache.data).find(key => key.includes('read_stats'));
+            // url && workReportCache.del(url)
             return res.status(200).json(newStats);
         } else {
             return res.status(422).send({ status: 422, message: `Missing required inputs. Please add date and weight` })
@@ -54,11 +54,11 @@ export const addProfileStats = async (req: express.Request, res: express.Respons
 
 export const readAllProfileStats = async (req: express.Request, res: express.Response) => {
     try {
-        const key = req.originalUrl;
+        // const key = req.originalUrl;
         const { profile_id } = req.params;
 
         const stats = await getAllProfileStats(profile_id);
-        workReportCache.set(key, stats, 2592000);
+        // workReportCache.set(key, stats, 2592000);
         return res.status(200).json(stats)
     } catch (error) {
         console.log(error)
@@ -102,8 +102,8 @@ export const updateAProfileStat = async (req: express.Request, res: express.Resp
         });
 
         const stats = await patchAProfileStatById(profile_id, stat_id, newStat);
-        let url = workReportCache.data && Object.keys(workReportCache.data).find(key => key.includes('read_stats'));
-        url && workReportCache.del(url);
+        // let url = workReportCache.data && Object.keys(workReportCache.data).find(key => key.includes('read_stats'));
+        // url && workReportCache.del(url);
         return res.status(200).json(stats)
     } catch (error) {
         console.log(error)
@@ -135,9 +135,8 @@ export const addProfileSet = async (req: express.Request, res: express.Response)
             }
             ));
 
-            let url = workReportCache.data && Object.keys(workReportCache.data).find(key => key.includes('read_sets'));
-            console.log('url', url)
-            url && workReportCache.del(url);
+            // let url = workReportCache.data && Object.keys(workReportCache.data).find(key => key.includes('read_sets'));
+            // url && workReportCache.del(url);
             return res.status(200).json(newPR);
         } else {
             res.status(422).send({ status: 422, message: 'Missing Inputs. Please fill in form' })
@@ -153,7 +152,7 @@ export const readAllProfileSets = async (req: express.Request, res: express.Resp
         const { profile_id } = req.params;
         const key = req.originalUrl;
         const sets = await getAllProfileSets(profile_id);
-        workReportCache.set(key, sets, 2592000);
+        // workReportCache.set(key, sets, 2592000);
 
         return res.status(200).json(sets)
     } catch (error) {
@@ -166,8 +165,8 @@ export const removeAProfileSet = async (req: express.Request, res: express.Respo
     try {
         const { id } = req.params;
         const setLog = await deleteAProfileSet(id);
-        let url = workReportCache.data && Object.keys(workReportCache.data).find(key => key.includes('read_sets'));
-        url && workReportCache.del(url)
+        // let url = workReportCache.data && Object.keys(workReportCache.data).find(key => key.includes('read_sets'));
+        // url && workReportCache.del(url)
         return res.status(200).json(setLog)
     } catch (error) {
         console.log(error)
@@ -192,8 +191,8 @@ export const updateAProfileSet = async (req: express.Request, res: express.Respo
         });
 
         const sets = await patchAProfileSet(profile_id, set_id, newSet);
-        let url = workReportCache.data && Object.keys(workReportCache.data).find(key => key.includes('read_sets'));
-        url && workReportCache.del(url)
+        // let url = workReportCache.data && Object.keys(workReportCache.data).find(key => key.includes('read_sets'));
+        // url && workReportCache.del(url)
         return res.status(200).json(sets)
     } catch (error) {
         console.log(error)

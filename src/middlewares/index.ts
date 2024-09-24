@@ -75,6 +75,7 @@ export const isOwner = async (req: express.Request, res: express.Response, next:
 export function cacheMiddleware(req: express.Request, res: express.Response, next: express.NextFunction) {
     const key = req.originalUrl;
     const cachedResponse = workReportCache.get(key);
+    console.log('key', key, 'cachedResponse', cachedResponse)
     if (cachedResponse) {
         res.send(cachedResponse);
     } else {
